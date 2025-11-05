@@ -12,16 +12,16 @@
       overflow: hidden;
       height: 100%;
       width: 100%;
-      position: relative;
     }
     .love {
       position: absolute;
       color: pink;
-      font-size: clamp(1rem, 2vw, 1.5rem); /* Responsive font size */
+      font-size: clamp(0.9rem, 2.5vw, 1.4rem); /* responsive font size */
       font-family: 'Courier New', Courier, monospace;
       white-space: nowrap;
       pointer-events: none;
       text-shadow: 0 0 10px hotpink;
+      will-change: transform; /* hint for GPU acceleration */
     }
   </style>
 </head>
@@ -34,10 +34,19 @@
   </audio>
 
   <script>
-    const count = 100;
+    const count = 70; // fewer elements = smoother
     const texts = [];
-    const scale = Math.min(window.innerWidth, window.innerHeight) / 40;
+    let scale, centerX, centerY;
 
+    function updateScale() {
+      scale = Math.min(window.innerWidth, window.innerHeight) / 40;
+      centerX = window.innerWidth / 2;
+      centerY = window.innerHeight / 2;
+    }
+    updateScale();
+    window.addEventListener("resize", updateScale);
+
+    // Create texts
     for (let i = 0; i < count; i++) {
       const span = document.createElement("div");
       span.className = "love";
@@ -60,8 +69,7 @@
     function animate() {
       texts.forEach(({ el, offset }) => {
         const { x, y } = heartPath(t + offset);
-        el.style.left = `${window.innerWidth / 2 + x * scale}px`;
-        el.style.top = `${window.innerHeight / 2 - y * scale}px`;
+        el.style.transform = `translate(${centerX + x * scale}px, ${centerY - y * scale}px)`;
       });
       t += 0.01;
       requestAnimationFrame(animate);
