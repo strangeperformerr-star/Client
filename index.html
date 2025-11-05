@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Love You Anushka</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+    .love {
+      position: absolute;
+      color: pink;
+      font-size: clamp(1rem, 2vw, 1.5rem); /* Responsive font size */
+      font-family: 'Courier New', Courier, monospace;
+      white-space: nowrap;
+      pointer-events: none;
+      text-shadow: 0 0 10px hotpink;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔊 Background Music -->
+  <audio autoplay loop>
+    <source src="your-music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const count = 100;
+    const texts = [];
+    const scale = Math.min(window.innerWidth, window.innerHeight) / 40;
+
+    for (let i = 0; i < count; i++) {
+      const span = document.createElement("div");
+      span.className = "love";
+      span.textContent = "I love you Anushka";
+      document.body.appendChild(span);
+      texts.push({ el: span, offset: (i / count) * Math.PI * 2 });
+    }
+
+    let t = 0;
+    function heartPath(theta) {
+      const x = 16 * Math.pow(Math.sin(theta), 3);
+      const y =
+        13 * Math.cos(theta) -
+        5 * Math.cos(2 * theta) -
+        2 * Math.cos(3 * theta) -
+        Math.cos(4 * theta);
+      return { x, y };
+    }
+
+    function animate() {
+      texts.forEach(({ el, offset }) => {
+        const { x, y } = heartPath(t + offset);
+        el.style.left = `${window.innerWidth / 2 + x * scale}px`;
+        el.style.top = `${window.innerHeight / 2 - y * scale}px`;
+      });
+      t += 0.01;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
