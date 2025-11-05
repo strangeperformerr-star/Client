@@ -23,15 +23,33 @@
       text-shadow: 0 0 10px hotpink;
       will-change: transform;
     }
+    /* Overlay to capture first tap */
+    #overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      color: pink;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-family: 'Courier New', Courier, monospace;
+      z-index: 999;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <!-- 🔊 Background Music -->
-  <audio autoplay loop>
-    <source src="be.mp4" type="audio/mpeg" />
+  <audio id="bgMusic" loop>
+    <source src="be.mp4" type="audio/mp4" />
     Your browser does not support the audio element.
   </audio>
+
+  <!-- Overlay prompt -->
+  <div id="overlay">💖 Tap to Play Music 💖</div>
 
   <script>
     const count = 70;
@@ -77,8 +95,15 @@
     }
 
     animate();
+
+    // 🎵 Mobile-friendly music start
+    const overlay = document.getElementById("overlay");
+    const music = document.getElementById("bgMusic");
+
+    overlay.addEventListener("click", () => {
+      music.play();
+      overlay.style.display = "none"; // hide overlay after tap
+    });
   </script>
 </body>
 </html>
-
-
