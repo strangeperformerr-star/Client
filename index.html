@@ -16,11 +16,11 @@
     .love {
       position: absolute;
       color: pink;
-      font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+      font-size: clamp(0.8rem, 2vw, 1.2rem); /* slightly smaller */
       font-family: 'Courier New', Courier, monospace;
       white-space: nowrap;
       pointer-events: none;
-      text-shadow: 0 0 10px hotpink;
+      text-shadow: 0 0 8px hotpink;
       will-change: transform;
     }
   </style>
@@ -34,12 +34,12 @@
   </audio>
 
   <script>
-    const count = 70;
+    const count = 50; // fewer texts = lighter feel
     const texts = [];
     let scale, centerX, centerY;
 
     function updateScale() {
-      scale = Math.min(window.innerWidth, window.innerHeight) / 40;
+      scale = Math.min(window.innerWidth, window.innerHeight) / 45; // slightly smaller
       centerX = window.innerWidth / 2;
       centerY = window.innerHeight / 2;
     }
@@ -64,8 +64,8 @@
         2 * Math.cos(3 * theta) -
         Math.cos(4 * theta);
 
-      // 💡 Make heart narrower on small screens
-      const aspectFix = window.innerWidth < 500 ? 0.7 : 1;
+      // 💡 Make heart narrower on mobile
+      const aspectFix = window.innerWidth < 500 ? 0.6 : 0.85;
       return { x: x * aspectFix, y };
     }
 
