@@ -63,7 +63,10 @@
         5 * Math.cos(2 * theta) -
         2 * Math.cos(3 * theta) -
         Math.cos(4 * theta);
-      return { x, y };
+
+      // 💡 Make heart narrower on small screens
+      const aspectFix = window.innerWidth < 500 ? 0.7 : 1;
+      return { x: x * aspectFix, y };
     }
 
     function animate() {
