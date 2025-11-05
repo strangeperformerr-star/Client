@@ -16,12 +16,12 @@
     .love {
       position: absolute;
       color: pink;
-      font-size: clamp(0.9rem, 2.5vw, 1.4rem); /* responsive font size */
+      font-size: clamp(0.9rem, 2.5vw, 1.4rem);
       font-family: 'Courier New', Courier, monospace;
       white-space: nowrap;
       pointer-events: none;
       text-shadow: 0 0 10px hotpink;
-      will-change: transform; /* hint for GPU acceleration */
+      will-change: transform;
     }
   </style>
 </head>
@@ -34,14 +34,15 @@
   </audio>
 
   <script>
-    const count = 70; // fewer elements = smoother
+    const count = 70;
     const texts = [];
-    let scale, centerX, centerY;
+    let scale, centerX, centerY, yOffset;
 
     function updateScale() {
       scale = Math.min(window.innerWidth, window.innerHeight) / 40;
       centerX = window.innerWidth / 2;
       centerY = window.innerHeight / 2;
+      yOffset = scale * 2; // shift heart down a bit
     }
     updateScale();
     window.addEventListener("resize", updateScale);
@@ -69,7 +70,7 @@
     function animate() {
       texts.forEach(({ el, offset }) => {
         const { x, y } = heartPath(t + offset);
-        el.style.transform = `translate(${centerX + x * scale}px, ${centerY - y * scale}px)`;
+        el.style.transform = `translate(${centerX + x * scale}px, ${centerY - y * scale + yOffset}px)`;
       });
       t += 0.01;
       requestAnimationFrame(animate);
